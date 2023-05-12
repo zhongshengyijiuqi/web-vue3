@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+// import { onMounted, onBeforeUnmount } from 'vue'
+// import { storeToRefs } from 'pinia'
+import { useStore } from '@/store'
+const store = useStore();
+// let { cycleCount } = storeToRefs(store);
+
+store.setCycleCount()
 </script>
 
 <template>
@@ -17,12 +24,11 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="main" style="min-width:1024px">
     <RouterView />
   </div>
-    
 </template>
 
 <style scoped>
-  .main{
-    width: 100%;
-    height: 100%;
-  }
+.main {
+  width: 100%;
+  height: 100%;
+}
 </style>

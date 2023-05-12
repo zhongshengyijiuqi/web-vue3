@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { createPinia } from 'pinia' //状态管理器
 import Components from '@/components' //公共组件
 import directives from '@/extend/directives.js' //指令
 
@@ -22,6 +23,7 @@ for (const key in directives) { // 挂载多个指令
   app.directive(key, directives[key])
 }
 
+app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
