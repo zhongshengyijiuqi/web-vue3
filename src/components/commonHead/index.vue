@@ -24,7 +24,6 @@ let day = ref(Date.now())
 watch(
     () => props.timeDay,
     (newVal, oldVal) => {
-        console.log(`msg changed from ${oldVal} to ${newVal}`);
         day.value = newVal
     },
     { deep: true }

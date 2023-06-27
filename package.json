@@ -10,10 +10,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "element-plus": "^2.3.4",
+    "is-electron": "^2.2.2",
     "node-sass": "^8.0.0",
     "pinia": "^2.0.36",
+    "qs": "^6.11.1",
     "sass": "^1.62.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"

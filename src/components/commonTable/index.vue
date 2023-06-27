@@ -1,8 +1,8 @@
 <template>
-    <div class="table">
-        <div class="title" ref="table-title">{{ title }}</div>
+    <div class="table" ref="table">
+        <div class="title" :ref="refName + 'tableTitle'">{{ title }}</div>
         <div class="swiper-table">
-            <tr class="head-row" ref="head-row">
+            <tr class="head-row" :ref="refName + 'headRow'">
                 <th class="th-cell" v-for="(item, index) of headList" :key="index" :style="{
                     width: 100 / headList.length + '%',
                     'max-width': item.maxwidth,
@@ -12,7 +12,7 @@
                 </th>
             </tr>
             <div class="table-body">
-                <div class="body-row" v-for="(row, rowIndex) of tableList.data" :key="rowIndex">
+                <div class="body-row" v-for="(row, rowIndex) of tableList" :key="rowIndex">
                     <div class="td-cell" ref="parent" v-for="(headItem, headIndex) of headList" :key="headIndex" :style="{
                         width: 100 / headList.length + '%',
                         'max-width': headItem.maxwidth,
@@ -27,7 +27,7 @@
                             }}</span>
                     </div>
                 </div>
-                <div class="body-row example" ref="body-row"></div>
+                <div class="body-row example" :ref="refName + 'bodyRow'"></div>
             </div>
         </div>
     </div>
@@ -38,9 +38,10 @@ import { nextTick, onMounted } from 'vue';
 
 
 const props = defineProps({
+    refName: String,
     title: String,
     headList: Array,
-    tableList: Object,
+    tableList: Array,
 })
 const internalInstance = getCurrentInstance()
 let needAnimateList = reactive({})
@@ -53,7 +54,8 @@ const getDivRef = (e, index) => {
 const updateView = () => {
     needAnimateList = {};
     AnimateWidthList = {};
-    props.tableList.data.forEach((arr, rowIndex) => {
+    props.tableList.forEach((arr, rowIndex) => {
+        // console.log(arr)
         props.headList.forEach((item, index) => {
             if (listRefs['animate' + rowIndex + index]) {
                 let pWidth = listRefs['animate' + rowIndex + index].scrollWidth;
@@ -67,11 +69,12 @@ const updateView = () => {
     });
     internalInstance.ctx.$forceUpdate();
 };
-
-onMounted(async () => {
-    // console.log(parent.value)
+onMounted(() => {
     watchEffect(() => {
-        updateView()
+        console.log(parent)
+        if (parent.value&&parent.value.length != 0) {
+            updateView()
+        }
     });
     // console.log(needAnimateList,AnimateWidthList)
 })
